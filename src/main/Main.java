@@ -20,14 +20,16 @@ import java.util.List;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
+	
+		int maxStepSize = 10;
+		
+		for(int stepSize = 1; stepSize <= maxStepSize; stepSize++) {
 		//Setup
-		HashMap<String, Double> opcodeWeights = new HashMap<String, Double>();
-		File malDir = new File("C:\\Users\\colby\\Desktop\\SCHOOL\\AndroidCT\\Cleaned Disassembly\\Malware");
-		File benDir = new File("C:\\Users\\colby\\Desktop\\SCHOOL\\AndroidCT\\Cleaned Disassembly\\Benign");
-		int stepSize = 1;
+		File malDir = new File("C:\\Users\\colbyadmin\\Desktop\\SCHOOL\\AndroidCT\\Cleaned Disassembly\\Malware");
+		File benDir = new File("C:\\Users\\colbyadmin\\Desktop\\SCHOOL\\AndroidCT\\Cleaned Disassembly\\Benign");
 
 		//Read in list of pairs
-		BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\colby\\Desktop\\SCHOOL\\AndroidCT\\Pairing Lists\\Pair"  + stepSize + ".txt"));
+		BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\colbyadmin\\Desktop\\SCHOOL\\AndroidCT\\Pairing Lists\\Pair"  + stepSize + ".txt"));
 		List<String> opcodePairList = new ArrayList<String>();
 		for (String line = br.readLine(); line != null; line = br.readLine()) {
 			opcodePairList.add(line);
@@ -41,7 +43,7 @@ public class Main {
 		}
 
 		//Prepare the arff file
-		BufferedWriter arff = new BufferedWriter(new FileWriter("C:/Users/colby/Desktop/SCHOOL/AndroidCT/Pair_Step_" + stepSize + ".arff"));
+		BufferedWriter arff = new BufferedWriter(new FileWriter("C:/Users/colbyadmin/Desktop/SCHOOL/AndroidCT/Pair_Step_" + stepSize + ".arff"));
 		arff.write("@relation Malware-Benign");
 		arff.newLine();
 		arff.newLine();
@@ -56,16 +58,16 @@ public class Main {
 		arff.newLine();
 
 		//Read in List of files to test
-		BufferedReader br2 = new BufferedReader(new FileReader("C:\\Users\\colby\\Desktop\\SCHOOL\\AndroidCT\\List of Files.txt"));
+		BufferedReader br2 = new BufferedReader(new FileReader("C:\\Users\\colbyadmin\\Desktop\\SCHOOL\\AndroidCT\\File Lists\\Train 1.txt"));
 		List<String> malFileList = new ArrayList<String>();
 		List<String> benFileList = new ArrayList<String>();
 		br2.readLine();
 		int incrementer = 1;
 		for (String line = br2.readLine(); line != null; line = br2.readLine()) {
-			if(incrementer < 1001) {
+			if(incrementer < 334) {
 				malFileList.add(line);
 				incrementer++;
-			} else if(incrementer == 1001) {
+			} else if(incrementer == 334) {
 				System.out.println(line);
 				br2.readLine();
 				benFileList.add(br2.readLine());
@@ -163,6 +165,7 @@ public class Main {
 			}
 		}
 		arff.close();
+	}
 	}
 
 }
