@@ -22,7 +22,7 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 
-		int maxStepSize = 1;
+		int maxStepSize = 10;
 
 		for(int stepSize = 1; stepSize <= maxStepSize; stepSize++) {
 			//Setup
