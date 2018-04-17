@@ -44,11 +44,12 @@ public class Main {
 			}
 
 			//Prepare the arff file
-			BufferedWriter arff = new BufferedWriter(new FileWriter("C:/Users/colby/Desktop/SCHOOL/AndroidCT/Step Size Classifiers/Data Files/Pair_Step_" + stepSize + ".arff"));
-			arff.write("@relation Malware-Benign");
+			BufferedWriter arff = new BufferedWriter(new FileWriter("C:/Users/colby/Desktop/SCHOOL/AndroidCT/Step Size Classifiers/Data Files/Train 1/Pair_Step_" + stepSize + ".arff"));
+			//BufferedWriter arff = new BufferedWriter(new FileWriter("C:/Users/colby/Desktop/SCHOOL/AndroidCT/Step Size Classifiers/Data Files/Train 2/Pair_Step_" + stepSize + ".arff"));
+			arff.write("@relation Benign-Malware");
 			arff.newLine();
 			arff.newLine();
-			arff.write("@attribute @@class@@ {Malware,Benign}");
+			arff.write("@attribute @@class@@ {Benign,Malware}");
 			arff.newLine();
 			for(String s: opcodePairList){
 				arff.write("@attribute \"" + s + "\" numeric");
@@ -65,10 +66,10 @@ public class Main {
 			br2.readLine();
 			int incrementer = 1;
 			for (String line = br2.readLine(); line != null; line = br2.readLine()) {
-				if(incrementer < 334) {
+				if(incrementer < 501) {
 					malFileList.add(line);
 					incrementer++;
-				} else if(incrementer == 334) {
+				} else if(incrementer == 501) {
 					System.out.println(line);
 					br2.readLine();
 					benFileList.add(br2.readLine());
