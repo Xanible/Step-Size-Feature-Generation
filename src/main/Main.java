@@ -101,14 +101,23 @@ public class Main {
 					//Send file through sequencer
 					HashMap<String, Integer> sequencesCount = new HashMap<String,Integer>(sequencesMasterList);
 					for(int i = 0;i < opcodes.size() - stepSize;i++) {
-						String p = opcodes.get(i) + " " + opcodes.get(i + stepSize);
-						if(sequencesCount.containsKey(p)) {
-							int currentVal = sequencesCount.get(p);
-							currentVal = 1;
-							sequencesCount.put(p, currentVal);
-						} else {
-							System.out.println(s);
-							System.exit(0);
+						if(!opcodes.get(i).equals(".end-method")) {
+							List<String> l = new ArrayList<String>();
+							for(int j = 1; j < stepSize; j++) {
+								l.add(opcodes.get(i + j));
+							}
+							if(!l.contains(".end-method")) {
+								String p = opcodes.get(i) + " " + opcodes.get(i + stepSize);
+								if(sequencesCount.containsKey(p)) {
+									int currentVal = sequencesCount.get(p);
+									currentVal = 1;
+									sequencesCount.put(p, currentVal);
+								} else {
+									System.out.println(s);
+									System.exit(0);
+								}
+							}
+
 						}
 					}
 
@@ -143,14 +152,23 @@ public class Main {
 					//Send file through sequencer
 					HashMap<String, Integer> sequencesCount = new HashMap<String,Integer>(sequencesMasterList);
 					for(int i = 0;i < opcodes.size() - stepSize;i++) {
-						String p = opcodes.get(i) + " " + opcodes.get(i + stepSize);
-						if(sequencesCount.containsKey(p)) {
-							int currentVal = sequencesCount.get(p);
-							currentVal = 1;
-							sequencesCount.put(p, currentVal);
-						} else {
-							System.out.println(s);
-							System.exit(0);
+						if(!opcodes.get(i).equals(".end-method")) {
+							List<String> l = new ArrayList<String>();
+							for(int j = 1; j < stepSize; j++) {
+								l.add(opcodes.get(i + j));
+							}
+							if(!l.contains(".end-method")) {
+								String p = opcodes.get(i) + " " + opcodes.get(i + stepSize);
+								if(sequencesCount.containsKey(p)) {
+									int currentVal = sequencesCount.get(p);
+									currentVal = 1;
+									sequencesCount.put(p, currentVal);
+								} else {
+									System.out.println(s);
+									System.exit(0);
+								}
+							}
+
 						}
 					}
 
@@ -169,6 +187,6 @@ public class Main {
 			arff.close();
 		}
 	}
-	
+
 
 }
