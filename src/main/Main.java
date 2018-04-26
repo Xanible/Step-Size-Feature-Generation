@@ -26,11 +26,11 @@ public class Main {
 
 		for(int stepSize = 1; stepSize <= maxStepSize; stepSize++) {
 			//Setup
-			File malDir = new File("C:\\Users\\colby\\Desktop\\SCHOOL\\AndroidCT\\Cleaned Disassembly\\Malware");
-			File benDir = new File("C:\\Users\\colby\\Desktop\\SCHOOL\\AndroidCT\\Cleaned Disassembly\\Benign");
+			File malDir = new File("D:/Disassembly/Cleaned/Malware/2");
+			File benDir = new File("D:/Disassembly/Cleaned/Benign/2");
 
 			//Read in list of pairs
-			BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\colby\\Desktop\\SCHOOL\\AndroidCT\\Pairing Lists\\Pair"  + stepSize + ".txt"));
+			BufferedReader br = new BufferedReader(new FileReader("D:/Pair-Lists/Pair"  + stepSize + ".txt"));
 			List<String> opcodePairList = new ArrayList<String>();
 			for (String line = br.readLine(); line != null; line = br.readLine()) {
 				opcodePairList.add(line);
@@ -44,7 +44,7 @@ public class Main {
 			}
 
 			//Prepare the arff file
-			BufferedWriter arff = new BufferedWriter(new FileWriter("C:/Users/colby/Desktop/SCHOOL/AndroidCT/Step Size Classifiers/Data Files/Train 1/Pair_Step_" + stepSize + ".arff"));
+			BufferedWriter arff = new BufferedWriter(new FileWriter("C:/Users/colbyadmin/Desktop/SCHOOL/AndroidCT/Train 1/Pair_Step_" + stepSize + ".arff"));
 			//BufferedWriter arff = new BufferedWriter(new FileWriter("C:/Users/colby/Desktop/SCHOOL/AndroidCT/Step Size Classifiers/Data Files/Train 2/Pair_Step_" + stepSize + ".arff"));
 			arff.write("@relation Benign-Malware");
 			arff.newLine();
@@ -60,9 +60,20 @@ public class Main {
 			arff.newLine();
 
 			//Read in List of files to test
-			BufferedReader br2 = new BufferedReader(new FileReader("C:\\Users\\colby\\Desktop\\SCHOOL\\AndroidCT\\File Lists\\Train 1.txt"));
+			//BufferedReader br2 = new BufferedReader(new FileReader("C:\\Users\\colby\\Desktop\\SCHOOL\\AndroidCT\\File Lists\\Train 1.txt"));
 			List<String> malFileList = new ArrayList<String>();
 			List<String> benFileList = new ArrayList<String>();
+			File[] fl1 = malDir.listFiles();
+			File[] fl2 = benDir.listFiles();
+			
+			for(int i = 0; i < fl1.length; i++) {
+				malFileList.add(fl1[i].getName());
+			}
+			for(int i = 0; i < fl2.length; i++) {
+				benFileList.add(fl2[i].getName());
+			}
+			
+			/*
 			br2.readLine();
 			int incrementer = 1;
 			for (String line = br2.readLine(); line != null; line = br2.readLine()) {
@@ -79,9 +90,9 @@ public class Main {
 					incrementer++;
 				}
 			}
-			br2.close();	
+			br2.close();*/
 
-
+			int incrementer = 1;
 			//Sequencing loops
 			incrementer = 1;
 			for(String s: malFileList) {
@@ -113,8 +124,8 @@ public class Main {
 									currentVal = 1;
 									sequencesCount.put(p, currentVal);
 								} else {
-									System.out.println(s);
-									System.exit(0);
+									System.out.println(p);
+									//System.exit(0);
 								}
 							}
 
@@ -164,8 +175,8 @@ public class Main {
 									currentVal = 1;
 									sequencesCount.put(p, currentVal);
 								} else {
-									System.out.println(s);
-									System.exit(0);
+									System.out.println(p);
+									//System.exit(0);
 								}
 							}
 
