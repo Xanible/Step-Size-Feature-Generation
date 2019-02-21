@@ -26,11 +26,19 @@ public class Main {
 
 		for(int stepSize = 2; stepSize <= maxStepSize; stepSize++) {
 			//Setup
+<<<<<<< HEAD
 			File malDir = new File("G:\\My Drive\\Android-Classification\\Blah\\cleaned\\malware");
 			File benDir = new File("G:\\My Drive\\Android-Classification\\Blah\\cleaned\\benign");
 
 			//Read in list of pairs
 			BufferedReader br = new BufferedReader(new FileReader("G:\\My Drive\\Android-Classification\\Blah\\Pair-Lists\\Pair"  + stepSize + ".txt"));
+=======
+			File malDir = new File("C:\\Users\\colby\\Desktop\\SCHOOL\\AndroidCT\\Cleaned Disassembly\\Malware");
+			File benDir = new File("C:\\Users\\colby\\Desktop\\SCHOOL\\AndroidCT\\Cleaned Disassembly\\Benign");
+
+			//Read in list of pairs
+			BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\colby\\Desktop\\SCHOOL\\AndroidCT\\Pairing Lists\\Pair"  + stepSize + ".txt"));
+>>>>>>> parent of f1215cd... okay
 			List<String> opcodePairList = new ArrayList<String>();
 			for (String line = br.readLine(); line != null; line = br.readLine()) {
 				opcodePairList.add(line);
@@ -43,6 +51,7 @@ public class Main {
 				sequencesMasterList.put(s, 0);
 			}
 
+<<<<<<< HEAD
 			//Prepare the data file
 			BufferedWriter output = new BufferedWriter(new FileWriter("C:/Users/colby/Desktop/stuff/Step" + stepSize + "/Pair_Step_" + stepSize + ".txt"));
 			//BufferedWriter output = new BufferedWriter(new FileWriter("C:/Users/colby/Desktop/SCHOOL/AndroidCT/Step Size Classifiers/Data Files/Pair_Step_" + stepSize + ".arff"));
@@ -65,6 +74,28 @@ public class Main {
 			}*/
 			
 			
+=======
+			//Prepare the arff file
+			BufferedWriter arff = new BufferedWriter(new FileWriter("C:/Users/colby/Desktop/SCHOOL/AndroidCT/Step Size Classifiers/Data Files/Train 1/Pair_Step_" + stepSize + ".arff"));
+			//BufferedWriter arff = new BufferedWriter(new FileWriter("C:/Users/colby/Desktop/SCHOOL/AndroidCT/Step Size Classifiers/Data Files/Train 2/Pair_Step_" + stepSize + ".arff"));
+			arff.write("@relation Benign-Malware");
+			arff.newLine();
+			arff.newLine();
+			arff.write("@attribute @@class@@ {Benign,Malware}");
+			arff.newLine();
+			for(String s: opcodePairList){
+				arff.write("@attribute \"" + s + "\" numeric");
+				arff.newLine();
+			}
+			arff.newLine();
+			arff.write("@data");
+			arff.newLine();
+
+			//Read in List of files to test
+			BufferedReader br2 = new BufferedReader(new FileReader("C:\\Users\\colby\\Desktop\\SCHOOL\\AndroidCT\\File Lists\\Train 1.txt"));
+			List<String> malFileList = new ArrayList<String>();
+			List<String> benFileList = new ArrayList<String>();
+>>>>>>> parent of f1215cd... okay
 			br2.readLine();
 			int incrementer = 1;
 			for (String line = br2.readLine(); line != null; line = br2.readLine()) {
@@ -81,9 +112,15 @@ public class Main {
 					incrementer++;
 				}
 			}
+<<<<<<< HEAD
 			br2.close();
 
 			incrementer = 1;
+=======
+			br2.close();	
+
+
+>>>>>>> parent of f1215cd... okay
 			//Sequencing loops
 			incrementer = 1;
 			for(String s: malFileList) {
@@ -119,7 +156,11 @@ public class Main {
 									currentVal++;
 									sequencesCount.put(p, currentVal);
 								} else {
+<<<<<<< HEAD
 									System.out.println(p);
+=======
+									System.out.println(s);
+>>>>>>> parent of f1215cd... okay
 									System.exit(0);
 								}
 							}
@@ -176,7 +217,11 @@ public class Main {
 									currentVal++;
 									sequencesCount.put(p, currentVal);
 								} else {
+<<<<<<< HEAD
 									System.out.println(p);
+=======
+									System.out.println(s);
+>>>>>>> parent of f1215cd... okay
 									System.exit(0);
 								}
 							}
