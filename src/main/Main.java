@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 /* 
- *  This program will produce a weka data file of pairs from dalvik opcodes at a given step size.
+ *  This program will produce a libsvm data file of pairs from dalvik opcodes at a given step size.
  */
 
 public class Main {
@@ -24,13 +24,13 @@ public class Main {
 
 		int maxStepSize = 10;
 
-		for(int stepSize = 1; stepSize <= maxStepSize; stepSize++) {
+		for(int stepSize = 2; stepSize <= maxStepSize; stepSize++) {
 			//Setup
-			File malDir = new File("D:/Disassembly/Cleaned/Malware/2");
-			File benDir = new File("D:/Disassembly/Cleaned/Benign/2");
+			File malDir = new File("G:\\My Drive\\Android-Classification\\Blah\\cleaned\\malware");
+			File benDir = new File("G:\\My Drive\\Android-Classification\\Blah\\cleaned\\benign");
 
 			//Read in list of pairs
-			BufferedReader br = new BufferedReader(new FileReader("D:/Pair-Lists/Pair"  + stepSize + ".txt"));
+			BufferedReader br = new BufferedReader(new FileReader("G:\\My Drive\\Android-Classification\\Blah\\Pair-Lists\\Pair"  + stepSize + ".txt"));
 			List<String> opcodePairList = new ArrayList<String>();
 			for (String line = br.readLine(); line != null; line = br.readLine()) {
 				opcodePairList.add(line);
@@ -43,44 +43,35 @@ public class Main {
 				sequencesMasterList.put(s, 0);
 			}
 
-			//Prepare the arff file
-			BufferedWriter arff = new BufferedWriter(new FileWriter("C:/Users/colbyadmin/Desktop/SCHOOL/AndroidCT/Train 1/Pair_Step_" + stepSize + ".arff"));
-			//BufferedWriter arff = new BufferedWriter(new FileWriter("C:/Users/colby/Desktop/SCHOOL/AndroidCT/Step Size Classifiers/Data Files/Train 2/Pair_Step_" + stepSize + ".arff"));
-			arff.write("@relation Benign-Malware");
-			arff.newLine();
-			arff.newLine();
-			arff.write("@attribute @@class@@ {Benign,Malware}");
-			arff.newLine();
-			for(String s: opcodePairList){
-				arff.write("@attribute \"" + s + "\" numeric");
-				arff.newLine();
-			}
-			arff.newLine();
-			arff.write("@data");
-			arff.newLine();
+			//Prepare the data file
+			BufferedWriter output = new BufferedWriter(new FileWriter("C:/Users/colby/Desktop/stuff/Step" + stepSize + "/Pair_Step_" + stepSize + ".txt"));
+			//BufferedWriter output = new BufferedWriter(new FileWriter("C:/Users/colby/Desktop/SCHOOL/AndroidCT/Step Size Classifiers/Data Files/Pair_Step_" + stepSize + ".arff"));
+			
 
 			//Read in List of files to test
-			//BufferedReader br2 = new BufferedReader(new FileReader("C:\\Users\\colby\\Desktop\\SCHOOL\\AndroidCT\\File Lists\\Train 1.txt"));
+			BufferedReader br2 = new BufferedReader(new FileReader("C:\\Users\\colby\\Desktop\\Stuff\\List of Files.txt"));
+			//BufferedReader br2 = new BufferedReader(new FileReader("C:\\Users\\colby\\Desktop\\SCHOOL\\AndroidCT\\Test Files.txt"));
 			List<String> malFileList = new ArrayList<String>();
 			List<String> benFileList = new ArrayList<String>();
 			File[] fl1 = malDir.listFiles();
 			File[] fl2 = benDir.listFiles();
 			
+			/*
 			for(int i = 0; i < fl1.length; i++) {
 				malFileList.add(fl1[i].getName());
 			}
 			for(int i = 0; i < fl2.length; i++) {
 				benFileList.add(fl2[i].getName());
-			}
+			}*/
 			
-			/*
+			
 			br2.readLine();
 			int incrementer = 1;
 			for (String line = br2.readLine(); line != null; line = br2.readLine()) {
-				if(incrementer < 501) {
+				if(incrementer < 1001) {
 					malFileList.add(line);
 					incrementer++;
-				} else if(incrementer == 501) {
+				} else if(incrementer == 1001) {
 					System.out.println(line);
 					br2.readLine();
 					benFileList.add(br2.readLine());
@@ -90,9 +81,9 @@ public class Main {
 					incrementer++;
 				}
 			}
-			br2.close();*/
+			br2.close();
 
-			int incrementer = 1;
+			incrementer = 1;
 			//Sequencing loops
 			incrementer = 1;
 			for(String s: malFileList) {
@@ -121,11 +112,15 @@ public class Main {
 								String p = opcodes.get(i) + " " + opcodes.get(i + stepSize);
 								if(sequencesCount.containsKey(p)) {
 									int currentVal = sequencesCount.get(p);
-									currentVal = 1;
+									// Binary
+									//currentVal = 1;
+									
+									// Count
+									currentVal++;
 									sequencesCount.put(p, currentVal);
 								} else {
 									System.out.println(p);
-									//System.exit(0);
+									System.exit(0);
 								}
 							}
 
@@ -133,11 +128,13 @@ public class Main {
 					}
 
 					//Print out sequence frequency file
-					arff.write("Malware");
+					output.write("1");
+					int index = 1;
 					for(String op: opcodePairList){
-						arff.write("," + Integer.toString(sequencesCount.get(op)));
+						output.write(" " + Integer.toString(index) + ":" + Integer.toString(sequencesCount.get(op)));
+						index++;
 					}
-					arff.newLine();
+					output.newLine();
 					incrementer++;
 
 				} catch (Exception e) {
@@ -172,11 +169,15 @@ public class Main {
 								String p = opcodes.get(i) + " " + opcodes.get(i + stepSize);
 								if(sequencesCount.containsKey(p)) {
 									int currentVal = sequencesCount.get(p);
-									currentVal = 1;
+									// Binary
+									//currentVal = 1;
+									
+									// Count
+									currentVal++;
 									sequencesCount.put(p, currentVal);
 								} else {
 									System.out.println(p);
-									//System.exit(0);
+									System.exit(0);
 								}
 							}
 
@@ -184,18 +185,20 @@ public class Main {
 					}
 
 					//Print out sequence frequency file
-					arff.write("Benign");
+					output.write("0");
+					int index = 1;
 					for(String op: opcodePairList){
-						arff.write("," + Integer.toString(sequencesCount.get(op)));
+						output.write(" " + Integer.toString(index) + ":" + Integer.toString(sequencesCount.get(op)));
+						index++;
 					}
-					arff.newLine();
+					output.newLine();
 					incrementer++;
 
 				} catch (Exception e) {
 					System.out.println("Error reading from benign file!");
 				}
 			}
-			arff.close();
+			output.close();
 		}
 	}
 
